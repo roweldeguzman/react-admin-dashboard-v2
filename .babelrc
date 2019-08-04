@@ -1,11 +1,11 @@
 {
   "presets": [
-    "env",
-    "react",
-    "stage-1",    
+    "@babel/preset-env",
+    "@babel/preset-react"
   ],
   "plugins": [
-    "transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime",
     ["babel-plugin-root-import", {
       "rootPathSuffix": "./src",
       "rootPathPrefix": "@"

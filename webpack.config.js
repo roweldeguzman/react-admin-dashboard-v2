@@ -1,39 +1,59 @@
 const webpack = require('webpack');
 const path = require('path');
-
-const port = 3000;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: [
-    `webpack-dev-server/client?http://localhost:${port}`,
-    'webpack/hot/dev-server',
-    './src/index'
-  ],
-  output: {
-    path: __dirname,
-    filename: 'bundle.js',
-    publicPath: '/public'
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '*'],   
-  },
-  devtool: 'inline-source-map',
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
+	entry: [
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/dev-server',
+		'./src/index'
   ],
   devServer: {
     contentBase: './public',
-    hot: true
+    historyApiFallback: true,
+    proxy: {
+      '/api/*': {
+        target: 'https://riff-qa.jukinmedia.com',
+        secure: true,
+        changeOrigin: true
+      },
+    },
+    publicPath: '/public',
   },
-  module: {
-    rules: [
-      {
+	output: {
+    path: __dirname,
+    filename: 'bundle.js',
+    publicPath: '/public'
+	},
+	resolve: {
+		extensions: ['.js', '.jsx']
+	},
+	devtool: 'source-map',
+	plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      filename: 'index.html'
+    }),
+	],
+	module: {
+
+    
+		rules: [
+			{
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
         include: path.join(__dirname, 'src'),
-      }, {
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env', "@babel/preset-react"]
+          }
+        }
+      },
+      
+      {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
@@ -49,7 +69,9 @@ module.exports = {
             }
           }
         ]
-      }, {
+      },
+      
+      {
         test: /node_modules.*\.css$/,
         use: [
           {
@@ -62,13 +84,17 @@ module.exports = {
             }
           }
         ]
-      },{
+      },
+      
+      {
         test: /.(scss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
-      }, {
+      },
+      
+      {
         test: /\.(png|woff|woff2|eot|ttf|svg|jpeg|jpg|gif)$/,
         use: 'url-loader?limit=100000'
       }
-    ]
-  }
+		]
+	}
 };

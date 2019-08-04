@@ -38,7 +38,7 @@ export const validate = {
  * @param type string tag/id/class
  */
 
-export const getParent = (parentNode: string, childNode: any, type: string) => {
+export const getParent = (parentNode, childNode, type) => {
   let obj = childNode.parentNode;
   if (type === 'tag' || type == null) {
     try {

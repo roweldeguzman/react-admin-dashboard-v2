@@ -38,7 +38,6 @@
   cursor: default;
 }
 
-
 .input {
   height: 50px;
   width: 100%;
@@ -61,7 +60,6 @@
 .input::placeholder {
   color: #CCC;
 }
-
 .usernameField {
   composes: input;
   margin-bottom: 20px;

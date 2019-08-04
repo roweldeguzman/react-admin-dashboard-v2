@@ -32,6 +32,7 @@ node_modules
 
 # App packaged
 /static
+/dist
 # bundle
 bundle.js
 

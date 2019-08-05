@@ -14,7 +14,7 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api/*': {
-        target: 'https://riff-qa.jukinmedia.com',
+        target: 'http://api.com',
         secure: true,
         changeOrigin: true
       },
@@ -39,7 +39,6 @@ module.exports = {
 	],
 	module: {
 
-    
 		rules: [
 			{
         test: /\.(js|jsx)$/,
